@@ -28,11 +28,19 @@ in
   };
 
   scripts.hello.exec = "${pkgs.uv}/bin/uv run python hello.py";
+  scripts.custom-make-migrations.exec =
+    "${pkgs.uv}/bin/uv run python manage.py makemigrations";
+  scripts.custom-migrate.exec = "${pkgs.uv}/bin/uv run python manage.py migrate";
+  scripts.load-base-db-data.exec = 
+    "${pkgs.uv}/bin/uv run python manage.py load_base_db_data";
+  scripts.run-dev-server.exec =
+    "${pkgs.uv}/bin/uv run python manage.py runserver";
 
   processes = {
     silly-example.exec = "while true; do echo hello && sleep 1; done";
     ping.exec = "ping localhost";
     nvidia.exec = "nvidia-smi -l";
+    django.exec = "run-dev-server";
   };
 
   enterShell = ''
