@@ -31,19 +31,26 @@ in
   scripts.run-dev-server.exec =
     "${pkgs.uv}/bin/uv run python manage.py runserver";
 
+  scripts.run-prod-server.exec =
+    "${pkgs.uv}/bin/uv run daphne devenv_deployment.asgi:application";
+
+
   tasks = {
     "deploy:make-migrations".exec = "${pkgs.uv}/bin/uv run python manage.py makemigrations";
     "deploy:migrate".exec = "${pkgs.uv}/bin/uv run python manage.py migrate";
     "deploy:load-base-db-data".exec = "${pkgs.uv}/bin/uv run python manage.py load_base_db_data";
     
     "dev:runserver".exec = "${pkgs.uv}/bin/uv run python manage.py runserver";
+
+    # "prod:runserver".exec = "${pkgs.uv}/bin/uv daphne devenv_deployment.asgi:application";
   };
 
   processes = {
     silly-example.exec = "while true; do echo hello && sleep 1; done";
     ping.exec = "ping localhost";
     nvidia.exec = "nvidia-smi -l";
-    django.exec = "run-dev-server";
+    # django.exec = "run-dev-server";
+    django.exec = "run-prod-server";
   };
 
   enterShell = ''
