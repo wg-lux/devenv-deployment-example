@@ -42,7 +42,7 @@ in
     
     "dev:runserver".exec = "${pkgs.uv}/bin/uv run python manage.py runserver";
 
-    # "prod:runserver".exec = "${pkgs.uv}/bin/uv daphne devenv_deployment.asgi:application";
+    "prod:runserver".exec = "${pkgs.uv}/bin/uv daphne devenv_deployment.asgi:application";
   };
 
   processes = {
